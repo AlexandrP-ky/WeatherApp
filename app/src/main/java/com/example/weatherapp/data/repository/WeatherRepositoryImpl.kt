@@ -1,7 +1,5 @@
 package com.example.weatherapp.data.repository
 
-
-import com.example.weatherapp.core.RetrofitInstance
 import com.example.weatherapp.data.api.WeatherService
 import com.example.weatherapp.data.responce.todayresponsemodel.TodayAndCoordResponseModel
 import com.example.weatherapp.data.responce.weekforecastresponsemodel.Daily
@@ -19,10 +17,10 @@ const val EXCLUDE = "minutely,hourly"
 const val UNITS = "metric"
 const val LANG = "ru"
 
-class WeatherRepositoryImpl(private val coordStorage: CoordStorage) : WeatherRepository {
-
-    private val retrofitInstance: WeatherService =
-        RetrofitInstance.getRetrofitInstance().create(WeatherService::class.java)
+class WeatherRepositoryImpl(
+    private val coordStorage: CoordStorage,
+    private val retrofitInstance: WeatherService
+) : WeatherRepository {
 
     private fun mapToCoordModel(response: TodayAndCoordResponseModel): CoordModel {
         val coords = Coords(
