@@ -1,7 +1,6 @@
 package com.example.weatherapp.presentation
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -21,8 +20,6 @@ import com.example.weatherapp.presentation.viewmodel.ViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 private const val LOCATION_PERMISSION_ID = 10
 
@@ -48,7 +45,6 @@ class WeatherFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val greeting = binding.greeting
@@ -57,23 +53,22 @@ class WeatherFragment : Fragment() {
         val cityName = binding.cityName
         val currentDay = binding.day
         val recyclerView = binding.forecastResult
-
         val currentLocation = binding.currentLocation
+
         viewModel.greeting.observe(viewLifecycleOwner, { result ->
             greeting.isVisible = result
         })
 
         viewModel.forecastToday.observe(viewLifecycleOwner, { result ->
-            val sdf = SimpleDateFormat("EEEE")
-            val dateFormat = Date(result.dt.toLong() * 1000)
-            val weekday = sdf.format(dateFormat)
-
             cityName.text = result.name
-            currentDay.text = weekday.replaceFirstChar {
-                if (it.isLowerCase())
-                    it.titlecase(Locale.getDefault()) else it.toString()
-            }
-            tempToday.text = result.temp?.toInt().toString() + " \u2103"
+        })
+
+        viewModel.currentDay.observe(viewLifecycleOwner, { result ->
+            currentDay.text = result
+        })
+
+        viewModel.tempToday.observe(viewLifecycleOwner, { result ->
+            tempToday.text = result
         })
 
         viewModel.forecastWeek.observe(viewLifecycleOwner, { result ->
