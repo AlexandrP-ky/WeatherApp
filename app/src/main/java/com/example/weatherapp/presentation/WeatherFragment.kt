@@ -180,6 +180,3 @@ class WeatherFragment : Fragment() {
         _binding = null
     }
 }
-
-
-

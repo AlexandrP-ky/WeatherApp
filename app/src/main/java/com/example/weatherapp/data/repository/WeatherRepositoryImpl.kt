@@ -14,6 +14,11 @@ import com.example.weatherapp.domain.model.ForecastTodayModel
 import com.example.weatherapp.domain.repository.WeatherRepository
 import io.reactivex.rxjava3.core.Single
 
+const val API_KEY_VALUE = "ac31c579d79ae3bf73e3f5bcad390c49"
+const val EXCLUDE = "minutely,hourly"
+const val UNITS = "metric"
+const val LANG = "ru"
+
 class WeatherRepositoryImpl(private val coordStorage: CoordStorage) : WeatherRepository {
 
     private val retrofitInstance: WeatherService =
@@ -31,33 +36,34 @@ class WeatherRepositoryImpl(private val coordStorage: CoordStorage) : WeatherRep
         )
     }
 
-    override fun saveCoord(cityName: String, apiKey: String): Single<CoordModel> {
-        return retrofitInstance.getCoord(cityName, apiKey).map { mapToCoordModel(it) }
+    override fun saveCoord(cityName: String): Single<CoordModel> {
+        return retrofitInstance.getCoord(cityName, apiKey = API_KEY_VALUE)
+            .map { mapToCoordModel(it) }
     }
 
     override fun getForecastToday(
         cityName: String,
-        units: String,
-        lang: String,
-        apiKey: String,
-    ): Single<ForecastTodayModel> {
-        return retrofitInstance.getForecastToday(cityName, units, lang, apiKey)
+
+        ): Single<ForecastTodayModel> {
+        return retrofitInstance.getForecastToday(
+            cityName,
+            units = UNITS,
+            lang = LANG,
+            apiKey = API_KEY_VALUE
+        )
             .map { mapToForecastTodayModel(it) }
     }
 
     override fun getForecastTodayCurrentLocation(
         lat: String,
         lon: String,
-        exclude: String,
-        units: String,
-        apiKey: String
     ): Single<ForecastTodayModel> {
         return retrofitInstance.getForecastCurrentToday(
             lat,
             lon,
-            exclude,
-            units,
-            apiKey
+            units = UNITS,
+            lang = LANG,
+            apiKey = API_KEY_VALUE
         ).map { mapToForecastTodayCurrentLocation(it) }
     }
 
@@ -71,17 +77,14 @@ class WeatherRepositoryImpl(private val coordStorage: CoordStorage) : WeatherRep
     }
 
     override fun getForecastWeek(
-        exclude: String,
-        units: String,
-        apiKey: String
     ): Single<List<ForecastWeekModel>> {
         return retrofitInstance
             .getForecastWeek(
                 coordStorage.get().lat,
                 coordStorage.get().lon,
-                exclude,
-                units,
-                apiKey
+                exclude = EXCLUDE,
+                units = UNITS,
+                apiKey = API_KEY_VALUE
             )
             .map { mapToListWeekForecastModel(it) }
     }
@@ -89,17 +92,14 @@ class WeatherRepositoryImpl(private val coordStorage: CoordStorage) : WeatherRep
     override fun getForecastWeekCurrentLocation(
         lat: String,
         lon: String,
-        exclude: String,
-        units: String,
-        apiKey: String
     ): Single<List<ForecastWeekModel>> {
         return retrofitInstance
             .getForecastWeek(
                 lat,
                 lon,
-                exclude,
-                units,
-                apiKey
+                exclude = EXCLUDE,
+                units = UNITS,
+                apiKey = API_KEY_VALUE
             )
             .map { mapToListWeekForecastModel(it) }
     }

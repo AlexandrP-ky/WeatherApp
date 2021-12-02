@@ -8,44 +8,32 @@ import io.reactivex.rxjava3.core.Single
 
 class WeatherInteractor(private val repository: WeatherRepository) {
 
-    fun getCoord(cityName: String, apiKey: String): Single<CoordModel> {
-        return repository.saveCoord(cityName, apiKey)
+    fun getCoord(cityName: String): Single<CoordModel> {
+        return repository.saveCoord(cityName)
     }
 
     fun getForecastToday(
-        cityName: String,
-        units: String,
-        apiKey: String,
-        lang: String
+        cityName: String
     ): Single<ForecastTodayModel> {
-        return repository.getForecastToday(cityName, units, apiKey, lang)
+        return repository.getForecastToday(cityName)
     }
 
     fun getForecastTodayCurrentLocation(
         lat: String,
-        lon: String,
-        exclude: String,
-        units: String,
-        apiKey: String
+        lon: String
     ): Single<ForecastTodayModel> {
-        return repository.getForecastTodayCurrentLocation(lat, lon, exclude, units, apiKey)
+        return repository.getForecastTodayCurrentLocation(lat, lon)
     }
 
     fun getForecastWeek(
-        exclude: String,
-        units: String,
-        apiKey: String
     ): Single<List<ForecastWeekModel>> {
-        return repository.getForecastWeek(exclude, units, apiKey)
+        return repository.getForecastWeek()
     }
 
     fun getForecastWeekCurrentLocation(
         lat: String,
-        lon: String,
-        exclude: String,
-        units: String,
-        apiKey: String
+        lon: String
     ): Single<List<ForecastWeekModel>> {
-        return repository.getForecastWeekCurrentLocation(lat, lon, exclude, units, apiKey)
+        return repository.getForecastWeekCurrentLocation(lat, lon)
     }
 }

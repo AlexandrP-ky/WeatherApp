@@ -9,13 +9,6 @@ import com.example.weatherapp.domain.model.ForecastWeekModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-object NetworkService {
-    const val API_KEY_VALUE = "ac31c579d79ae3bf73e3f5bcad390c49"
-    const val EXCLUDE = "minutely,hourly"
-    const val UNITS = "metric"
-    const val LANG = "ru"
-}
-
 class ViewModel(
     private val interactor: WeatherInteractor
 ) : ViewModel() {
@@ -30,7 +23,7 @@ class ViewModel(
     val forecastWeek: LiveData<List<ForecastWeekModel>> = _forecastWeek
 
     fun getCoord(cityName: String) {
-        interactor.getCoord(cityName, NetworkService.API_KEY_VALUE)
+        interactor.getCoord(cityName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -39,17 +32,12 @@ class ViewModel(
             })
     }
 
-    fun setVisible(){
+    fun setVisible() {
         _greeting.postValue(false)
     }
 
     fun getForecastToday(cityName: String) {
-        interactor.getForecastToday(
-            cityName,
-            NetworkService.UNITS,
-            NetworkService.LANG,
-            NetworkService.API_KEY_VALUE
-        )
+        interactor.getForecastToday(cityName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({ result ->
@@ -60,11 +48,7 @@ class ViewModel(
     }
 
     fun getForecastWeek() {
-        interactor.getForecastWeek(
-            NetworkService.EXCLUDE,
-            NetworkService.UNITS,
-            NetworkService.API_KEY_VALUE
-        )
+        interactor.getForecastWeek()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({ result ->
@@ -78,13 +62,7 @@ class ViewModel(
         lat: String,
         lon: String
     ) {
-        interactor.getForecastTodayCurrentLocation(
-            lat = lat,
-            lon = lon,
-            NetworkService.UNITS,
-            NetworkService.LANG,
-            NetworkService.API_KEY_VALUE
-        )
+        interactor.getForecastTodayCurrentLocation(lat = lat, lon = lon)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({ result ->
@@ -98,13 +76,7 @@ class ViewModel(
         lat: String,
         lon: String
     ) {
-        interactor.getForecastWeekCurrentLocation(
-            lat = lat,
-            lon = lon,
-            NetworkService.EXCLUDE,
-            NetworkService.UNITS,
-            NetworkService.API_KEY_VALUE
-        )
+        interactor.getForecastWeekCurrentLocation(lat = lat, lon = lon)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({ result ->
