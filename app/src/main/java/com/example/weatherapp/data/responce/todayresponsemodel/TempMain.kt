@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName
 data class TempMain(
     @SerializedName("temp")
     @Expose
-    var temp: Double?,
+    val temp: Double?,
     @SerializedName("temp_min")
     @Expose
-    var temp_min: Double?,
+    val temp_min: Double?,
     @SerializedName("temp_max")
     @Expose
-    var temp_max: Double?,
+    val temp_max: Double?,
     @SerializedName("feels_like")
     @Expose
-    var feels_like: Double?
+    val feels_like: Double?
 )

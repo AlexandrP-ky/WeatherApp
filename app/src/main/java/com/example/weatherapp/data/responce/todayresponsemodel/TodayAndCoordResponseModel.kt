@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName
 data class TodayAndCoordResponseModel(
     @SerializedName("main")
     @Expose
-    var main: TempMain?,
+    val main: TempMain?,
     @SerializedName("coord")
     @Expose
-    var coord: Coord?,
+    val coord: Coord?,
     @SerializedName("dt")
     @Expose
     val dt: Int,

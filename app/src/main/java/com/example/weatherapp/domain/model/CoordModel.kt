@@ -1,6 +1,6 @@
 package com.example.weatherapp.domain.model
 
 data class CoordModel (
-    var lon: String,
-    var lat: String
+    val lon: String,
+    val lat: String
 )
