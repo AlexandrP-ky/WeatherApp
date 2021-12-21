@@ -1,5 +1,4 @@
 # WeatherApp
-My Weather App version 1.0.0
 
 Приложение прогноза погоды
 
