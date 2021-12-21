@@ -20,6 +20,7 @@ import com.example.weatherapp.presentation.viewmodel.ViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 private const val LOCATION_PERMISSION_ID = 10
 
@@ -27,8 +28,7 @@ class WeatherFragment : Fragment() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private var _binding: FragmentWeatherBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentWeatherBinding
 
     private val viewModel by viewModel<ViewModel>()
 
@@ -41,7 +41,7 @@ class WeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentWeatherBinding.inflate(inflater, container, false)
+        binding = FragmentWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -168,10 +168,5 @@ class WeatherFragment : Fragment() {
                 "Please give location permission", Toast.LENGTH_LONG
             ).show()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

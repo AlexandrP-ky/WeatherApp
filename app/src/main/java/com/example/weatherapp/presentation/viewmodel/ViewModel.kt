@@ -100,15 +100,19 @@ class ViewModel(
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun convertDt(dt: Int): String{
+    private fun convertDt(dt: Int): String {
         val sdf = SimpleDateFormat("EEEE")
         val dateFormat = Date(dt.toLong() * 1000)
         val weekday = sdf.format(dateFormat)
-        val textDt = weekday.replaceFirstChar {
+        return replaceFirstChar(weekday)
+    }
+
+    private fun replaceFirstChar(string: String?): String {
+        val s = string.toString().replaceFirstChar {
             if (it.isLowerCase())
                 it.titlecase(Locale.getDefault()) else it.toString()
         }
-        return textDt
+        return s
     }
 
 }

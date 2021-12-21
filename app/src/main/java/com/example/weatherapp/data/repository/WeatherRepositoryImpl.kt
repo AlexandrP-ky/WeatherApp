@@ -70,7 +70,8 @@ class WeatherRepositoryImpl(
         return ForecastTodayModel(
             responseModel.name,
             responseModel.dt,
-            responseModel.main?.temp
+            responseModel.main?.temp,
+            responseModel.weather[0].description
         )
     }
 
@@ -112,7 +113,8 @@ class WeatherRepositoryImpl(
         return ForecastWeekModel(
             daily.dt,
             daily.temp.max,
-            daily.temp.min
+            daily.temp.min,
+            daily.weather[0].main
         )
     }
 
@@ -121,7 +123,8 @@ class WeatherRepositoryImpl(
         return ForecastTodayModel(
             responseModel.name,
             responseModel.dt,
-            responseModel.main?.temp
+            responseModel.main?.temp,
+            responseModel.weather[0].description
         )
     }
 }
